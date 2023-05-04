@@ -6,10 +6,12 @@ const {
   getAllBlog,
   deleteBlog,
   liketheBlog,
-  disliketheBlog
+  disliketheBlog,
+  uploadImages,
 } = require("../controller/blogController");
 
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
+const { uploadPhoto, blogImgResize } = require("../middlewares/uploadImages");
 
 const router = express.Router();
 
@@ -23,6 +25,14 @@ const router = express.Router();
 // });
 
 router.post("/", authMiddleware, isAdmin, createBlog);
+router.put(
+  "/upload/:id",
+  authMiddleware,
+  isAdmin,
+  uploadPhoto.array("images", 10),
+  blogImgResize,
+  uploadImages
+);
 router.put("/dislikes", authMiddleware, disliketheBlog);
 router.put("/likes", authMiddleware, liketheBlog);
 
