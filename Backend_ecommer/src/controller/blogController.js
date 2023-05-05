@@ -186,8 +186,6 @@ const uploadImages = asyncHandler(async (req, res) => {
       const { path } = file;
       const newPath = await uploader(path);
       urls.push(newPath);
-      console.log(file);
-      console.log(path);
       fs.unlinkSync(path);
     }
 

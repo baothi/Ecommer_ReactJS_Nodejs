@@ -36,7 +36,7 @@ const productImgResize = async (req, res, next) => {
         .resize(300, 300)
         .toFormat("jpeg")
         .jpeg({ quanlity: 90 })
-        .toFile(`../../${file.filename}`, function (err) {
+        .toFile(`../public/images/${file.filename}`, function (err) {
           if (err) {
             console.error("sharp >>>>>", err);
           }
@@ -55,7 +55,7 @@ const blogImgResize = async (req, res, next) => {
         .resize(300, 300)
         .toFormat("jpeg")
         .jpeg({ quanlity: 90 })
-        .toFile(`../../${file.filename}`, function (err) {
+        .toFile(`../public/images/${file.filename}`, function (err) {
           if (err) {
             console.error("sharp >>>>>", err);
           }
