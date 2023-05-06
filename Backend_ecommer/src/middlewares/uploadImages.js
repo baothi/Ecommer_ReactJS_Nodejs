@@ -1,6 +1,7 @@
 const multer = require('multer');
 const sharp = require('sharp');
 const path = require('path');
+const fs = require("fs");
 
 const multerStorage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -42,6 +43,7 @@ const productImgResize = async (req, res, next) => {
           }
           console.log(" ok ok ok")
         });
+      // fs.unlinkSync(`../public/images/${file.filename}`)
     })
   );
   next();
@@ -61,6 +63,7 @@ const blogImgResize = async (req, res, next) => {
           }
           console.log(" ok ok ok")
         });
+      fs.unlinkSync(`../public/images/${file.filename}`)
     })
   );
   next();

@@ -15,6 +15,8 @@ const procategoryRouter = require('./routes/prodcategoryRoute');
 const blogcategoryRouter = require('./routes/blogCatRoute');
 const brandRouter = require('./routes/brancRoute');
 const couponRouter = require('./routes/couponRoute');
+const colorRouter = require('./routes/colorRoute');
+const enqRouter = require('./routes/enqRoute');
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
@@ -28,6 +30,8 @@ app.use('/api/category/', procategoryRouter);
 app.use('/api/blogcategory/', blogcategoryRouter);
 app.use('/api/brand/', brandRouter);
 app.use('/api/coupon/', couponRouter);
+app.use('/api/color/', colorRouter);
+app.use('/api/enquiry/', enqRouter);
 // app.use("/", (req, res) => {
 //   res.send("hello world 1111111111111")
 // })
