@@ -45,25 +45,25 @@ const Header = () => {
           <div className="col-5">
             <div className="heaser-upper-links d-flex align-items-center justify-content-between">
               <div>
-                <Link className='d-flex align-items-center gap-10 text-white'>
+                <Link to="/compare-product" className='d-flex align-items-center gap-10 text-white'>
                 <img src="images/compare.svg" alt="Compare" />
                 <p className='mb-0'>Compare <br /> Product</p>
                 </Link>
               </div>
               <div>
-                <Link className='d-flex align-items-center gap-10 text-white'>
+                <Link to="/wishlist" className='d-flex align-items-center gap-10 text-white'>
                 <img src="images/wishlist.svg" alt="Wishlist" />
                 <p className='mb-0'>Favourite <br /> Wishlist</p>
                 </Link>
               </div>
               <div>
-                <Link className='d-flex align-items-center gap-10 text-white'>
+                <Link to="/login" className='d-flex align-items-center gap-10 text-white'>
                 <img src="images/user.svg" alt="User" />
                 <p className='mb-0'>Login <br /> My Account</p>
                 </Link>
               </div>
               <div>
-                <Link className='d-flex align-items-center gap-10 text-white'>
+                <Link to="/cart" className='d-flex align-items-center gap-10 text-white'>
                 <img src="images/cart.svg" alt="Cart" />
                 <div className='d-flex flex-column gap-10'>
                   <span className="badge bg-white text-dark">0</span>
@@ -109,8 +109,8 @@ const Header = () => {
               <div className="menu-link">
                 <div className="d-flex align-items-center gap-5">
                   <NavLink className="text-white" to="/">Home</NavLink>
-                  <NavLink className="text-white" to="/">Our Store</NavLink>
-                  <NavLink className="text-white" to="/">Blogs</NavLink>
+                  <NavLink className="text-white" to="/store">Our Store</NavLink>
+                  <NavLink className="text-white" to="/blogs">Blogs</NavLink>
                   <NavLink className="text-white" to="/contact">Contact</NavLink>
                 </div>
               </div>
