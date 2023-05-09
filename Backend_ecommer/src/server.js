@@ -6,6 +6,7 @@ const app = express();
 const dotenv = require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
+const cors = require("cors");
 
 const port = process.env.PORT || 8080;
 const authRouter = require('./routes/authRoute');
@@ -19,6 +20,7 @@ const colorRouter = require('./routes/colorRoute');
 const enqRouter = require('./routes/enqRoute');
 
 app.use(morgan('dev'));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

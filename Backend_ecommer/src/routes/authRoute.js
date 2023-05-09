@@ -47,7 +47,7 @@ router.put("/password", authMiddleware, updatePassword);
 router.put("/save-address", authMiddleware, saveAddress);
 router.put("/order/update-order/:id", authMiddleware, isAdmin, updateOrderStatus);
 router.post("/login", loginUser);
-router.post("/login-admin", loginAdmin);
+router.post("/admin-login", loginAdmin);
 router.post("/cart", authMiddleware, userCart);
 router.post("/cart/apply-coupon", authMiddleware, applyCoupon);
 router.post("/cart/cash-order", authMiddleware, createOrder);
