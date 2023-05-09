@@ -8,7 +8,7 @@ import Color from "../components/Color";
 import { TbGitCompare } from "react-icons/tb";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import watch from "../images/watch.jpg";
+// import watch from "../images/watch.jpg";
 import Container from "../components/Container";
 const SingleProduct = () => {
   const props = {
@@ -328,7 +328,7 @@ const SingleProduct = () => {
             <div className="modal-body py-0">
               <div className="d-flex align-items-center">
                 <div className="flex-grow-1 w-50">
-                  <img src={watch} className="img-fluid" alt="product imgae" />
+                  <img src="/images/watch.jpg" className="img-fluid" alt="product imgae" />
                 </div>
                 <div className="d-flex flex-column flex-grow-1 w-50">
                   <h6 className="mb-3">Apple Watch</h6>
