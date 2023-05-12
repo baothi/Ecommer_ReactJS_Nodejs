@@ -66,7 +66,8 @@ const Addbrand = () => {
         formik.resetForm();
         setTimeout(() => {
           dispatch(resetState());
-        }, 300);
+          navigate("/admin/list-brand");
+        }, 1000);
       }
     },
   });

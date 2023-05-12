@@ -63,7 +63,8 @@ const Addcolor = () => {
         formik.resetForm();
         setTimeout(() => {
           dispatch(resetState());
-        }, 300);
+          navigate("/admin/list-color");
+        }, 3000);
       }
     },
   });

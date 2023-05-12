@@ -48,30 +48,32 @@ const ViewOrder = () => {
   useEffect(() => {
     dispatch(getOrderByUser(userId));
   }, []);
-  const orderState = useSelector((state) => state.auth.orderbyuser[0].products);
-  console.log(orderState);
+  const orderState = useSelector((state) => state.auth.orderbyuser?.products);
   const data1 = [];
-  for (let i = 0; i < orderState.length; i++) {
-    data1.push({
-      key: i + 1,
-      name: orderState[i].product.title,
-      brand: orderState[i].product.brand,
-      count: orderState[i].count,
-      amount: orderState[i].product.price,
-      color: orderState[i].product.color,
-      date: orderState[i].product.createdAt,
-      action: (
-        <>
-          <Link to="/" className=" fs-3 text-danger">
-            <BiEdit />
-          </Link>
-          <Link className="ms-3 fs-3 text-danger" to="/">
-            <AiFillDelete />
-          </Link>
-        </>
-      ),
-    });
+  if(orderState){
+    for (let i = 0; i < orderState.length; i++) {
+      data1.push({
+        key: i + 1,
+        name: orderState[i].product.title,
+        brand: orderState[i].product.brand,
+        count: orderState[i].count,
+        amount: orderState[i].product.price,
+        color: orderState[i].product.color,
+        date: orderState[i].product.createdAt,
+        action: (
+          <>
+            <Link to="/" className=" fs-3 text-danger">
+              <BiEdit />
+            </Link>
+            <Link className="ms-3 fs-3 text-danger" to="/">
+              <AiFillDelete />
+            </Link>
+          </>
+        ),
+      });
+    }
   }
+  
   return (
     <div>
       <h3 className="mb-4 title">View Order</h3>

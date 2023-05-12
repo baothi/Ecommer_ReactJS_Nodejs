@@ -17,7 +17,6 @@ const updateColor = asyncHandler(async (req, res) => {
   validateMongoDbId(id);
   try {
     const updateColor = await Color.findByIdAndUpdate(id, req.body, { new: true });
-    console.log(updateColor);
     res.json(updateColor);
   } catch (error) {
     throw new Error(`Error creating Color ${error.message}`);

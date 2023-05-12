@@ -23,6 +23,7 @@ const Login = () => {
     },
     validationSchema: schema,
     onSubmit: (values) => {
+      console.log(values);
       dispatch(login(values));
     },
   });

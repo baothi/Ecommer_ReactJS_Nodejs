@@ -67,7 +67,7 @@ const Addblog = () => {
       toast.error("Something Went Wrong!");
     }
   }, [isSuccess, isError, isLoading]);
-
+  
   const img = [];
   imgState.forEach((i) => {
     img.push({
@@ -75,7 +75,7 @@ const Addblog = () => {
       url: i.url,
     });
   });
-  console.log(img);
+  console.log("img : ",img);
   useEffect(() => {
     formik.values.images = img;
   }, [blogImages]);
@@ -86,15 +86,17 @@ const Addblog = () => {
       title: blogName || "",
       description: blogDesc || "",
       category: blogCategory || "",
-      images: "",
+      images: blogImages ||"",
     },
     validationSchema: schema,
     onSubmit: (values) => {
+      
       if (getBlogId !== undefined) {
         const data = { id: getBlogId, blogData: values };
         dispatch(updateABlog(data));
         dispatch(resetState());
       } else {
+        values.images = img;
         dispatch(createBlogs(values));
         formik.resetForm();
         setTimeout(() => {

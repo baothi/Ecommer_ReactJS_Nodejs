@@ -115,12 +115,13 @@ export const couponSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(getACoupon.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.couponName = action.payload[0].name;
-        state.couponDiscount = action.payload[0].discount;
-        state.couponExpiry = action.payload[0].expiry;
+        state.couponName = action.payload.name;
+        state.couponDiscount = action.payload.discount;
+        state.couponExpiry = action.payload.expiry;
       })
       .addCase(getACoupon.rejected, (state, action) => {
         state.isLoading = false;
@@ -135,9 +136,9 @@ export const couponSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.couponName = action.payload[0].name;
-        state.couponDiscount = action.payload[0].discount;
-        state.couponExpiry = action.payload[0].expiry;
+        state.couponName = action.payload.name;
+        state.couponDiscount = action.payload.discount;
+        state.couponExpiry = action.payload.expiry;
       })
       .addCase(updateACoupon.rejected, (state, action) => {
         state.isLoading = false;

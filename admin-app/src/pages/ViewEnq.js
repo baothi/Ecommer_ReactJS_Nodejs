@@ -17,6 +17,7 @@ const ViewEnq = () => {
   const { enqName, enqMobile, enqEmail, enqComment, enqStatus } = enqState;
 
   useEffect(() => {
+    console.log("========================================")
     dispatch(getAEnquiry(getEnqId));
   }, [getEnqId]);
   const goBack = () => {

@@ -17,7 +17,6 @@ const updateBrand = asyncHandler(async (req, res) => {
   validateMongoDbId(id);
   try {
     const updateBrand = await Brand.findByIdAndUpdate(id, req.body, { new: true });
-    console.log(updateBrand);
     res.json(updateBrand);
   } catch (error) {
     throw new Error(`Error creating Brand ${error.message}`);

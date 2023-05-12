@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import CustomInput from "../components/CustomInput";
 import ReactQuill from "react-quill";
-import { useNavigate } from "react-router-dom";
+import { useLocation,useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
 import * as yup from "yup";
@@ -31,9 +31,11 @@ let schema = yup.object().shape({
 const Addproduct = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [color, setColor] = useState([]);
   const [images, setImages] = useState([]);
-  console.log(color);
+  const getProductId = location.pathname.split("/")[3];
+  // console.log(color);
   useEffect(() => {
     dispatch(getBrands());
     dispatch(getCategories());
@@ -73,6 +75,7 @@ const Addproduct = () => {
     formik.values.color = color ? color : " ";
     formik.values.images = img;
   }, [color, img]);
+  
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -92,7 +95,9 @@ const Addproduct = () => {
       setColor(null);
       setTimeout(() => {
         dispatch(resetState());
+        navigate("/admin/list-product")
       }, 3000);
+      
     },
   });
   const handleColors = (e) => {

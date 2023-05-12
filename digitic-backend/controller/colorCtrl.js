@@ -37,6 +37,9 @@ const getColor = asyncHandler(async (req, res) => {
   validateMongoDbId(id);
   try {
     const getaColor = await Color.findById(id);
+    console.log("============================================================================");
+    console.log(getaColor);
+    console.log("============================================================================");
     res.json(getaColor);
   } catch (error) {
     throw new Error(error);

@@ -17,7 +17,6 @@ const updateEnquiry = asyncHandler(async (req, res) => {
   validateMongoDbId(id);
   try {
     const updateEnquiry = await Enquiry.findByIdAndUpdate(id, req.body, { new: true });
-    console.log(updateEnquiry);
     res.json(updateEnquiry);
   } catch (error) {
     throw new Error(`Error creating Enquiry ${error.message}`);

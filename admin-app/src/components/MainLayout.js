@@ -214,6 +214,7 @@ const MainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
+                    onClick={() => localStorage.clear()}
                     to="/"
                   >
                     Signout
@@ -233,7 +234,7 @@ const MainLayout = () => {
         >
           <ToastContainer
             position="top-right"
-            autoClose={250}
+            autoClose={2500}
             hideProgressBar={false}
             newestOnTop={true}
             closeOnClick

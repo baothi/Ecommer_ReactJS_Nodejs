@@ -46,6 +46,7 @@ const Productlist = () => {
     dispatch(getProducts());
   }, []);
   const productState = useSelector((state) => state.product.products);
+  console.log("list product state", productState.color);
   const data1 = [];
   for (let i = 0; i < productState.length; i++) {
     data1.push({
@@ -57,7 +58,7 @@ const Productlist = () => {
       price: `${productState[i].price}`,
       action: (
         <>
-          <Link to="/" className=" fs-3 text-danger">
+          <Link to={`/admin/product/${productState[i]._id}`} className=" fs-3 text-danger">
             <BiEdit />
           </Link>
           <Link className="ms-3 fs-3 text-danger" to="/">

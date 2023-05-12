@@ -7,11 +7,11 @@ const {
   deleteProduct,
   addToWishlist,
   rating,
-  uploadImages,
-  deleteImages,
+  // uploadImages,
+  // deleteImages,
 } = require("../controller/productController");
 
-const { uploadPhoto, productImgResize } = require("../middlewares/uploadImages");
+// const { uploadPhoto, productImgResize } = require("../middlewares/uploadImages");
 
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 
@@ -27,21 +27,21 @@ router.post("/", authMiddleware, isAdmin, createProduct);
 //   productImgResize,
 //   uploadImages
 // );
-router.put(
-  "/upload",
-  authMiddleware,
-  isAdmin,
-  uploadPhoto.array("images", 10),
-  productImgResize,
-  uploadImages
-);
+// router.put(
+//   "/upload",
+//   authMiddleware,
+//   isAdmin,
+//   uploadPhoto.array("images", 10),
+//   productImgResize,
+//   uploadImages
+// );
 router.get("/:id", getAProduct);
 router.put("/wishlist", authMiddleware, addToWishlist);
 router.put("/rating", authMiddleware, rating);
 router.get("/", getAllProducts);
 router.put("/:id", authMiddleware, isAdmin, updateProduct);
 router.delete("/:id", authMiddleware, isAdmin, deleteProduct);
-router.delete("/delete-img/:id", authMiddleware, isAdmin, deleteImages);
+// router.delete("/delete-img/:id", authMiddleware, isAdmin, deleteImages);
 
 
 module.exports = router;

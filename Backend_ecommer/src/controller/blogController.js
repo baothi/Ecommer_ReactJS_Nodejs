@@ -77,7 +77,6 @@ const liketheBlog = asyncHandler(async (req, res) => {
     const alreadyDisliked = blog?.dislikes?.find(
       (userId) => userId.toString() === loginUserId?.toString()
     );
-    console.log("liketheBlog : ", alreadyDisliked)
     if (alreadyDisliked) {
       try {
         const blog = await Blog.findByIdAndUpdate(blogId, {
@@ -135,7 +134,6 @@ const disliketheBlog = asyncHandler(async (req, res) => {
     const alreadyliked = blog?.likes?.find(
       (userId) => userId.toString() === loginUserId?.toString()
     );
-    console.log("disliketheBlog : ", alreadyliked)
     if (alreadyliked) {
       const blog = await Blog.findByIdAndUpdate(blogId, {
         $pull: { likes: loginUserId },
@@ -201,6 +199,17 @@ const uploadImages = asyncHandler(async (req, res) => {
   }
 });
 
+const getImageBlog = async (req, res) => {
+  const { id } = req.params;
+  validateMongoDbId(id);
+  try {
+    const projection = { images: 1 };
+    const getBlog = await Blog.findById(id).select({images: 1});
+    res.json(getBlog);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 
 
@@ -213,4 +222,5 @@ module.exports = {
   liketheBlog,
   disliketheBlog,
   uploadImages,
+  getImageBlog,
 }

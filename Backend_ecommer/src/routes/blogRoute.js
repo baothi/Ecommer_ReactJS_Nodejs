@@ -8,6 +8,7 @@ const {
   liketheBlog,
   disliketheBlog,
   uploadImages,
+  getImageBlog,
 } = require("../controller/blogController");
 
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
@@ -38,6 +39,7 @@ router.put("/likes", authMiddleware, liketheBlog);
 
 router.put("/:id", authMiddleware, isAdmin, updateBlog);
 router.get("/:id", getBlog);
+router.get("/images/:id", getImageBlog);
 router.get("/", getAllBlog);
 router.delete("/:id", deleteBlog);
 

@@ -62,7 +62,16 @@ const loginAdmin = asyncHandler(async (req, res) => {
   let { email, password } = req.body;
   // check if user already exists or not
   const findAdmin = await User.findOne({ email });
-  if (findAdmin.role !== "admin") throw new Error("Not Authorised")
+  if (!findAdmin) {
+    return res.status(400).send({
+      message: 'This is an error!'
+   });
+  }
+  if (findAdmin.role !== "admin"){
+    return res.status(400).send({
+      message: 'Not Authorised'
+   });
+  }
   if (findAdmin && (await findAdmin.isPasswordMatched(password))) {
     const refreshToken = await generateRefreshToken(findAdmin?._id);
     const updateUser = await User.findByIdAndUpdate(findAdmin.id, {
@@ -86,7 +95,9 @@ const loginAdmin = asyncHandler(async (req, res) => {
       token: generateToken(findAdmin?._id)
     });
   } else {
-    throw new Error("Invalid Credentials");
+    return res.status(400).send({
+      message: 'Not Authorised'
+   });
   }
 });
 
@@ -436,10 +447,39 @@ const getOrders = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   validateMongoDbId(_id);
   try {
-    const userOrder = await Order.findOne({ orderby: _id }).populate("products.product").exec();
+    const userOrder = await Order.findOne({ orderby: _id })
+    .populate("products.product")
+    .populate("orderby")
+    .exec();
     res.json(userOrder);
   } catch (error) {
     throw new Error(error)
+  }
+});
+
+const getAllOrders = asyncHandler(async (req, res) => {
+  try {
+    const alluserorders = await Order.find()
+      .populate("products.product")
+      .populate("orderby")
+      .exec();
+    res.json(alluserorders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const getOrderByUserId = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongoDbId(id);
+  try {
+    const userorders = await Order.findOne({ orderby: id })
+      .populate("products.product")
+      .populate("orderby")
+      .exec();
+    return res.status(200).json(userorders);
+  } catch (error) {
+    throw new Error(error);
   }
 });
 
@@ -481,5 +521,7 @@ module.exports = {
   applyCoupon,
   createOrder,
   getOrders,
+  getAllOrders,
+  getOrderByUserId,
   updateOrderStatus,
 };

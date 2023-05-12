@@ -17,7 +17,6 @@ const updateCategory = asyncHandler(async (req, res) => {
   validateMongoDbId(id);
   try {
     const updateCategory = await ProCategory.findByIdAndUpdate(id, req.body, { new: true });
-    console.log(updateCategory);
     res.json(updateCategory);
   } catch (error) {
     throw new Error(`Error creating category ${error.message}`);

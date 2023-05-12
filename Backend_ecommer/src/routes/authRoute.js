@@ -21,6 +21,8 @@ const { createUser,
   applyCoupon,
   createOrder,
   getOrders,
+  getAllOrders,
+  getOrderByUserId,
   updateOrderStatus,
 
 } = require("../controller/userController");
@@ -55,8 +57,10 @@ router.get("/refresh", handleRefreshToken);
 router.get("/logout", logout);
 router.get("/wishlist", authMiddleware, getWishlist);
 router.get("/cart", authMiddleware, getUserCart);
-router.get("/all-users", getAllUsers);
+router.get("/all-users",authMiddleware, isAdmin, getAllUsers);
 router.get("/get-orders", authMiddleware, getOrders);
+router.get("/getallorders", authMiddleware, isAdmin, getAllOrders);
+router.get("/getorderbyuser/:id", getOrderByUserId);
 router.put("/edit-user", authMiddleware, updateAUser);
 
 router.put("/block-user/:id", authMiddleware, isAdmin, blockAUser);

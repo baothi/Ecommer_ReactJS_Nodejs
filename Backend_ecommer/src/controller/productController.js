@@ -3,8 +3,8 @@ const User = require('../models/userModel');
 const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
 const validateMongoDbId = require("../utils/validateMongodbId");
-const { cloudinaryUploadImg, cloudinaryDelete } = require("../utils/cloudinary");
-const fs = require("fs");
+// const { cloudinaryUploadImg, cloudinaryDelete } = require("../utils/cloudinary");
+// const fs = require("fs");
 
 const createProduct = asyncHandler(async (req, res) => {
   try {
@@ -96,7 +96,6 @@ const getAllProducts = asyncHandler(async (req, res) => {
       const productCount = await Product.countDocuments();
       if (skip >= productCount) throw new Error("This page does not exists")
     }
-    console.log(query)
     const product = await query
     res.json(product);
   } catch (error) {
@@ -205,46 +204,46 @@ const rating = asyncHandler(async (req, res) => {
 
 })
 
-const uploadImages = asyncHandler(async (req, res) => {
-  // const { id } = req.params;
-  // validateMongoDbId(id);
-  try {
-    const uploader = (path) => cloudinaryUploadImg(path, "images");
-    const urls = [];
-    const files = req.files;
-    for (const file of files) {
-      const { path } = file;
-      const newPath = await uploader(path);
-      urls.push(newPath);
-      fs.unlinkSync(path);
-    }
-    const images = urls.map((file) => {
-      return file;
-    })
-    res.json(images);
+// const uploadImages = asyncHandler(async (req, res) => {
+//   // const { id } = req.params;
+//   // validateMongoDbId(id);
+//   try {
+//     const uploader = (path) => cloudinaryUploadImg(path, "images");
+//     const urls = [];
+//     const files = req.files;
+//     for (const file of files) {
+//       const { path } = file;
+//       const newPath = await uploader(path);
+//       urls.push(newPath);
+//       fs.unlinkSync(path);
+//     }
+//     const images = urls.map((file) => {
+//       return file;
+//     })
+//     res.json(images);
 
-    // const finalproduct = await Product.findByIdAndUpdate(id, {
-    //   images: urls.map((file) => {
-    //     return file;
-    //   }),
-    // }, { new: true });
-    // res.json(finalproduct);
+//     // const finalproduct = await Product.findByIdAndUpdate(id, {
+//     //   images: urls.map((file) => {
+//     //     return file;
+//     //   }),
+//     // }, { new: true });
+//     // res.json(finalproduct);
 
-  } catch (error) {
-    throw new Error(error)
-  }
-});
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// });
 
-const deleteImages = asyncHandler(async (req, res) => {
-  const { id } = req.params;
-  // validateMongoDbId(id);
-  try {
-    const deleted = cloudinaryDelete(id, "images");
-    res.json({ message: "deleted" });
-  } catch (error) {
-    throw new Error(error)
-  }
-});
+// const deleteImages = asyncHandler(async (req, res) => {
+//   const { id } = req.params;
+//   // validateMongoDbId(id);
+//   try {
+//     const deleted = cloudinaryDelete(id, "images");
+//     res.json({ message: "deleted" });
+//   } catch (error) {
+//     throw new Error(error)
+//   }
+// });
 
 module.exports = {
   createProduct,
@@ -254,6 +253,6 @@ module.exports = {
   deleteProduct,
   addToWishlist,
   rating,
-  uploadImages,
-  deleteImages,
+  // uploadImages,
+  // deleteImages,
 }
