@@ -21,10 +21,24 @@ const enqRouter = require('./routes/enqRoute');
 const uploadRouter = require("./routes/uploadRoute");
 
 app.use(morgan('dev'));
+// app.use(function (req, res, next) {
+//   // Allow access request from any computers
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE,PATCH');
+//   res.header('Access-Control-Allow-Credentials', true);
+//   if ('OPTIONS' == req.method) {
+//     res.sendStatus(200);
+//   } else {
+//     next();
+//   }
+// });
 app.use(cors());
+app.options('*', cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+
 
 app.use('/api/user', authRouter);
 app.use('/api/product', productRouter);
@@ -34,7 +48,7 @@ app.use('/api/blogcategory/', blogcategoryRouter);
 app.use('/api/brand/', brandRouter);
 app.use('/api/coupon/', couponRouter);
 app.use('/api/color/', colorRouter);
-app.use('/api/enquiry/', enqRouter);
+app.use('/api/enquiry', enqRouter);
 app.use("/api/upload", uploadRouter);
 // app.use("/", (req, res) => {
 //   res.send("hello world 1111111111111")

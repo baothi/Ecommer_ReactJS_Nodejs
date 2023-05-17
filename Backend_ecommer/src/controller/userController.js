@@ -29,6 +29,7 @@ const createUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   let { email, password } = req.body;
   // check if user already exists or not
+  // console.log(email,password);
   const findUser = await User.findOne({ email });
   if (findUser && (await findUser.isPasswordMatched(password))) {
     const refreshToken = await generateRefreshToken(findUser?._id);
@@ -44,7 +45,8 @@ const loginUser = asyncHandler(async (req, res) => {
       httpOnly: true,
       maxAge: 72 * 60 * 60 * 1000,
     })
-    res.json({
+    // console.log("login ok");
+    return res.status(200).json({
       _id: findUser?._id,
       firstname: findUser?.firstname,
       lastname: findUser?.lastname,
@@ -53,7 +55,9 @@ const loginUser = asyncHandler(async (req, res) => {
       token: generateToken(findUser?._id)
     });
   } else {
-    throw new Error("Invalid Credentials");
+    return res.status(400).json(
+      new Error("Invalid Credentials")
+    )
   }
 });
 
@@ -317,7 +321,6 @@ const resetPassword = asyncHandler(async (req, res) => {
 
 const getWishlist = asyncHandler(async (req, res) => {
   const { _id } = req.user;
-  console.log(req.user);
   try {
     const findUsers = await User.findById(_id).populate("wishList");
     res.json(findUsers)
@@ -351,7 +354,7 @@ const userCart = asyncHandler(async (req, res, next) => {
     for (let i = 0; i < products.length; i++) {
       cartTotal = cartTotal + products[i].price * products[i].count;
     }
-    console.log(products, cartTotal);
+    // console.log(products, cartTotal);
     let newCart = await new Cart({
       products,
       cartTotal,

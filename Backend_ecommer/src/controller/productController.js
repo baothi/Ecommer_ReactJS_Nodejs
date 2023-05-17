@@ -97,7 +97,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
       if (skip >= productCount) throw new Error("This page does not exists")
     }
     const product = await query
-    res.json(product);
+    return res.status(200).json(product);
   } catch (error) {
     throw new Error(error);
   }
@@ -122,25 +122,28 @@ const filterProduct = asyncHandler(async (req, res) => {
 });
 
 const addToWishlist = asyncHandler(async (req, res) => {
+  console.log('addToWishlist - product',req.body)
   const { _id } = req.user;
   const { prodId } = req.body;
+  console.log(prodId);
   try {
     const user = await User.findById(_id);
     const alreadyadded = await user.wishList.find((id) => id.toString() === prodId);
+    console.log(alreadyadded)
     if (alreadyadded) {
       let user = await User.findByIdAndUpdate(_id, {
         $pull: { wishList: prodId },
       }, {
         new: true,
       })
-      res.json(user)
+      return res.status(200).json(user)
     } else {
       let user = await User.findByIdAndUpdate(_id, {
         $push: { wishList: prodId },
       }, {
         new: true,
       })
-      res.json(user)
+      return res.status(200).json(user)
     }
   } catch (error) {
     throw new Error(error)
