@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import compare from "../images/compare.svg";
@@ -6,7 +6,26 @@ import wishlist from "../images/wishlist.svg";
 import user from "../images/user.svg";
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
+import { useDispatch, useSelector } from "react-redux";
 const Header = () => {
+  const dispatch = useDispatch();
+  const [totalAmount, setTotalAmount] = useState(null);
+  const userCartState = useSelector(state=> state?.auth?.getCartProduct);
+  const authState = useSelector(state=> state?.auth);
+  useEffect(() =>{
+    let sum = 0;
+    for(let index = 0; index < userCartState?.length; index ++){
+      sum =sum + (Number(userCartState[index].quantity) * userCartState[index].price)
+      setTotalAmount(sum);
+    }
+  },[userCartState]);
+  
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
+
   return (
     <>
       <header className="header-top-strip py-3">
@@ -76,13 +95,20 @@ const Header = () => {
                 </div>
                 <div>
                   <Link
-                    to="/login"
+                    to={authState?.user===null ? "/login" : "/my-profile"}
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     <img src={user} alt="user" />
-                    <p className="mb-0">
-                      Log in <br /> My Account
-                    </p>
+                    {
+                      authState?.user===null ? 
+                        <p className="mb-0">
+                        Log in <br /> My Account
+                        </p>
+                        :
+                        <p className="mb-0">
+                          welcome {authState?.user?.firstname + " " + authState?.user?.lastname}
+                        </p>
+                    }
                   </Link>
                 </div>
                 <div>
@@ -92,8 +118,8 @@ const Header = () => {
                   >
                     <img src={cart} alt="cart" />
                     <div className="d-flex flex-column gap-10">
-                      <span className="badge bg-white text-dark">0</span>
-                      <p className="mb-0">$ 500</p>
+                      <span className="badge bg-white text-dark">{userCartState?.length ? userCartState?.length : 0}</span>
+                      <p className="mb-0">$ {totalAmount}</p>
                     </div>
                   </Link>
                 </div>
@@ -147,8 +173,10 @@ const Header = () => {
                   <div className="d-flex align-items-center gap-15">
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
+                    <NavLink to="/my-orders">My Order</NavLink>
                     <NavLink to="/blogs">Blogs</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
+                    <button className="border border-0 bg-transparent text-white text-uppercase" type="button" onClick={handleLogout}>Logout</button>
                   </div>
                 </div>
               </div>

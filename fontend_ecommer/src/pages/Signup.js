@@ -15,7 +15,7 @@ let signUpschema = yup.object().shape({
     .required('No password provided.') 
     .min(8, 'Password is too short - should be 8 chars minimum.')
     .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.'),
-  email: yup.string().min(3, 'must be at least 3 characters long').email('must be a valid email'),
+  email: yup.string().required("email is Required").min(3, 'must be at least 3 characters long').email('must be a valid email'),
   mobile: yup.number()
     .required("mobile is Required")
     .min(10, 'Mobile is too short - should be 10 chars minimum.'),

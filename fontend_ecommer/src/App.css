@@ -761,3 +761,6 @@ footer .input-group-text{
   color: var(--color-777777);
 }
 /* Shipping page ends here */
+.update-profile:hover{
+  cursor: pointer;
+}

@@ -1,10 +1,12 @@
 import React from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 const Resetpassword = () => {
+  const location = useLocation();
+  const getToken = location.pathname.split("/")[2];
   return (
     <>
       <Meta title={"Reset Password"} />

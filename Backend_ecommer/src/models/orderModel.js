@@ -2,30 +2,88 @@ const mongoose = require('mongoose'); // Erase if already required
 
 // Declare the Schema of the Mongo model
 var orderSchema = new mongoose.Schema({
-  products: [
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  shippingInfo: {
+    firstname: {
+      type: String,
+      required: true
+    },
+    lastname: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true
+    },
+    city: {
+      type: String,
+      required: true,
+    },
+    state: {
+      type: String,
+      required: true
+    },
+    other: {
+      type: String,
+      required: false,
+    },
+    pincode: {
+      type: String,
+      required: true
+    },
+  },
+  // paymentInfo: {
+  //   razorpayOrderId: {
+  //     type: String,
+  //     required: true,
+  //   },
+  //   razorpayPaymentId: {
+  //     type: String,
+  //     required: true,
+  //   },
+  // },
+  orderItems: [
     {
       product: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product"
+        ref: "Product",
+        require: true
       },
-      count: Number,
-      color: String,
+      color: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Color",
+        require: true
+      },
+      quantity: {
+        type: Number,
+        require: true
+      },
+      price: {
+        type: Number,
+        require: true
+      },
     },
   ],
-  paymentIntent: {},
+  paidAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  totalPrice: {
+    type: Number,
+    require: true,
+  },
+  totalPriceAfterDiscount: {
+    type: Number,
+    require: true,
+  },
   orderStatus: {
     type: String,
-    default: "Not Processed",
-    enum: ["Not Processed",
-      "Cash on Delivery",
-      "Processing",
-      "Dispatched",
-      "Cancelled",
-      "Delivered"]
-  },
-  orderby: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    default: "Ordered",
   },
 }, {
   timestamps: true,
