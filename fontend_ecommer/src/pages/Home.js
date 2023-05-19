@@ -143,7 +143,7 @@ const Home = () => {
           </div>
         </div>
       </Container>
-      <Container class1="home-wrapper-2 py-5">
+      {/* <Container class1="home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
             <div className="categories d-flex justify-content-between flex-wrap align-items-center">
@@ -206,7 +206,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
       <Container class1="featured-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
@@ -248,15 +248,15 @@ const Home = () => {
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column gap-15">
-                          <button className="border-0 bg-transparent">
+                          {/* <button className="border-0 bg-transparent">
                             <img src={prodcompare} alt="compare" />
-                          </button>
+                          </button> */}
                           <button className="border-0 bg-transparent">
                             <img onClick={()=>navigate("/product/"+item._id)} src={view} alt="view" />
                           </button>
-                          <button className="border-0 bg-transparent">
+                          {/* <button className="border-0 bg-transparent">
                             <img src={addcart} alt="addcart" />
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>
@@ -368,58 +368,58 @@ const Home = () => {
         </div>
         <div className="row">
         {
-              productState && productState?.map((item, index) =>{
-                if(item?.tags === "popular"){
-                  return(
-                    <div
-                        key={index}
-                      className="col-3"
-                    >
-                    <div
-                      className="product-card position-relative"
-                    >
-                      <div className="wishlist-icon position-absolute">
-                        <button className="border-0 bg-transparent" onClick={(e)=>{addToWishListUser(item?._id)}}>
-                          <img src={wish} alt="wishlist" />
-                        </button>
-                      </div>
-                      <div className="product-image">
-                        <img onClick={()=>navigate("/product/"+item._id)} src={item?.images[0].url} className="img-fluid" alt="product image" />
-                        <img onClick={()=>navigate("/product/"+item._id)} src={item?.images[1].url } className="img-fluid" alt="product image" />
-                      </div>
-                      <div className="product-details">
-                        <h6 className="brand">{item?.brand}</h6>
-                        <h5 className="product-title">
-                          {item.title}
-                        </h5>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          value={parseInt(item.totalrating)}
-                          edit={false}
-                          activeColor="#ffd700"
-                        />
-                        <p className="price">{VND.format(item?.price)}</p>
-                      </div>
-                      <div className="action-bar position-absolute">
-                        <div className="d-flex flex-column gap-15">
-                          <button className="border-0 bg-transparent">
-                            <img src={prodcompare} alt="compare" />
-                          </button>
-                          <button className="border-0 bg-transparent">
-                            <img onClick={()=>navigate("/product/"+item._id)} src={view} alt="view" />
-                          </button>
-                          <button className="border-0 bg-transparent">
-                            <img src={addcart} alt="addcart" />
-                          </button>
-                        </div>
-                      </div>
+          productState && productState?.map((item, index) =>{
+            if(item?.tags === "popular"){
+              return(
+                <div
+                    key={index}
+                  className="col-3"
+                >
+                <div
+                  className="product-card position-relative"
+                >
+                  <div className="wishlist-icon position-absolute">
+                    <button className="border-0 bg-transparent" onClick={(e)=>{addToWishListUser(item?._id)}}>
+                      <img src={wish} alt="wishlist" />
+                    </button>
+                  </div>
+                  <div className="product-image">
+                    <img onClick={()=>navigate("/product/"+item._id)} src={item?.images[0].url} className="img-fluid" alt="product image" />
+                    <img onClick={()=>navigate("/product/"+item._id)} src={item?.images[1].url } className="img-fluid" alt="product image" />
+                  </div>
+                  <div className="product-details">
+                    <h6 className="brand">{item?.brand}</h6>
+                    <h5 className="product-title">
+                      {item.title}
+                    </h5>
+                    <ReactStars
+                      count={5}
+                      size={24}
+                      value={parseInt(item.totalrating)}
+                      edit={false}
+                      activeColor="#ffd700"
+                    />
+                    <p className="price">{VND.format(item?.price)}</p>
+                  </div>
+                  <div className="action-bar position-absolute">
+                    <div className="d-flex flex-column gap-15">
+                      {/* <button className="border-0 bg-transparent">
+                        <img src={prodcompare} alt="compare" />
+                      </button> */}
+                      <button className="border-0 bg-transparent">
+                        <img onClick={()=>navigate("/product/"+item._id)} src={view} alt="view" />
+                      </button>
+                      {/* <button className="border-0 bg-transparent">
+                        <img src={addcart} alt="addcart" />
+                      </button> */}
                     </div>
                   </div>
-                  )
-                }
-              })
+                </div>
+              </div>
+              )
             }
+          })
+        }
         </div>
       </Container>
       <Container class1="marque-wrapper home-wrapper-2 py-5">

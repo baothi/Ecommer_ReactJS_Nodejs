@@ -12,6 +12,30 @@ const OurStore = () => {
   const [grid, setGrid] = useState(4);
   const dispatch = useDispatch();
   const productState = useSelector(state=>state?.product?.product);
+  const [brands, setBrands] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  const [category, setCategory] = useState([]);
+  const [tag, setTag] = useState([]);
+  
+  useEffect(() =>{
+    let newBrands = [];
+    let category=[];
+    let newtags = [];
+    for (let index = 0; index < productState?.length; index++) {
+      const element = productState[index];
+      newBrands.push(element.brand);
+      category.push(element.category);
+      newtags.push(element.tags);
+    }
+    setBrands(newBrands);
+    setCategories(category);
+    setTags(newtags);
+  },[productState]);
+
+  
+
   const getProducts = () => {
     dispatch(getAllProducts());
   };
@@ -20,7 +44,7 @@ const OurStore = () => {
     getProducts();
   },[]);
 
-
+  console.log([...new Set(brands)],[...new Set(categories)],[...new Set(tags)]);
 
 
   return (
@@ -34,6 +58,13 @@ const OurStore = () => {
               <h3 className="filter-title">Shop By Categories</h3>
               <div>
                 <ul className="ps-0">
+                {
+                  categories && [...new Set(categories)].map((item,index)=>{
+                    return (
+                      <li key={index} onClick={()=>setCategory(item)}>{item}</li>
+                    )
+                  })
+                }
                   <li>Watch</li>
                   <li>Tv</li>
                   <li>Camera</li>

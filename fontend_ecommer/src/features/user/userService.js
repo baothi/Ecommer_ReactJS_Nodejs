@@ -81,6 +81,14 @@ const forgotPassToken = async(data)=>{
   }
 };
 
+const ResetPass = async(data)=>{
+  console.log(data);
+  const response = await axios.put(`${base_url}user/reset-password/${data.token}`,{password: data.password})
+  if (response.data) {
+    return response.data;
+  }
+};
+
 const authService = {
   register,
   login,
@@ -93,6 +101,7 @@ const authService = {
   getUserOrders,
   updateUser,
   forgotPassToken,
+  ResetPass,
 };
 
 export default authService;

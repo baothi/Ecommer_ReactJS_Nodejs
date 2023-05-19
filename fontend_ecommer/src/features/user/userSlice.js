@@ -125,6 +125,17 @@ export const forgotPasswordToken = createAsyncThunk(
   }
 });
 
+export const ResetPassword = createAsyncThunk(
+  "auth/password/reset",   
+  async(data,thunkAPI)=>{
+  try {
+    return authService.ResetPass(data)
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+
 export const authSlice = createSlice({
   name: 'auth',
   initialState: initialState,
@@ -341,6 +352,27 @@ export const authSlice = createSlice({
         }
       })
       .addCase(forgotPasswordToken.rejected, (state, action) => {
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error.message;
+        state.isLoading = false;
+        if(state.isSuccess===false){
+          toast.success("Something went wrong");
+        }
+      })
+      .addCase(ResetPassword.pending,(state=>{
+        state.isLoading=true
+      }))
+      .addCase(ResetPassword.fulfilled,(state,action)=>{
+        state.isError = false;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.resetpass = action.payload;
+        if(state.isSuccess){
+          toast.success("Password udpate successfully");
+        }
+      })
+      .addCase(ResetPassword.rejected, (state, action) => {
         state.isError = true;
         state.isSuccess = false;
         state.message = action.error.message;
