@@ -23,11 +23,14 @@ const { createUser,
   // createOrder,
   // getOrders,
   // getAllOrders,
-  // getOrderByUserId,
-  // updateOrderStatus,
+  getOrderByUserId,
+  updateOrder,
   removeProductFromCart,
   updateProductQuantityFromCart,
   getMyOrder,
+  getMonthWiseOrderIncome,
+  getYearlyTotalOrders,
+  getAllOrder,
 
 } = require("../controller/userController");
 
@@ -51,7 +54,7 @@ router.post("/forgot-password-token", forgotPasswordToken);
 router.put("/reset-password/:token", resetPassword);
 router.put("/password", authMiddleware, updatePassword);
 router.put("/save-address", authMiddleware, saveAddress);
-// router.put("/order/update-order/:id", authMiddleware, isAdmin, updateOrderStatus);
+router.put("/updateOrder/:id", authMiddleware, isAdmin, updateOrder);
 router.post("/login", loginUser);
 router.post("/admin-login", loginAdmin);
 router.post("/cart", authMiddleware, userCart);
@@ -62,11 +65,14 @@ router.get("/refresh", handleRefreshToken);
 router.get("/logout", logout);
 router.get("/wishlist", authMiddleware, getWishlist);
 router.get("/cart", authMiddleware, getUserCart);
+router.get("/getMonthWiseOrderIncome", authMiddleware, getMonthWiseOrderIncome);
+router.get("/getYearlyTotalOrders", authMiddleware, getYearlyTotalOrders);
+router.get("/getAllOrder", authMiddleware,isAdmin, getAllOrder);
 router.get("/all-users",authMiddleware, isAdmin, getAllUsers);
 router.get("/getmyorders", authMiddleware, getMyOrder);
 // router.get("/get-orders", authMiddleware, getOrders);
 // router.get("/getallorders", authMiddleware, isAdmin, getAllOrders);
-// router.get("/getorderbyuser/:id", getOrderByUserId);
+router.get("/getorderbyuser/:id",authMiddleware, isAdmin, getOrderByUserId);
 router.put("/edit-user", authMiddleware, updateAUser);
 
 router.put("/block-user/:id", authMiddleware, isAdmin, blockAUser);

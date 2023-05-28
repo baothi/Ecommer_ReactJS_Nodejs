@@ -35,6 +35,7 @@ const Profile = () => {
     onSubmit: (values)=>{
       dispatch(updateProfile(values));
       setEdit(true);
+      window.location.reload();
     }
   });
   return (

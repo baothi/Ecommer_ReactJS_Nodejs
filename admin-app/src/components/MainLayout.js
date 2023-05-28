@@ -5,6 +5,7 @@ import {
   AiOutlineShoppingCart,
   AiOutlineUser,
   AiOutlineBgColors,
+  AiOutlineLogout,
 } from "react-icons/ai";
 import { RiCouponLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
@@ -25,6 +26,10 @@ const MainLayout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
+  // const logouUser = () =>{
+  //   localStorage.clear();
+  //   window.location.reload();
+  // }
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -40,6 +45,8 @@ const MainLayout = () => {
           defaultSelectedKeys={[""]}
           onClick={({ key }) => {
             if (key === "signout") {
+              localStorage.clear();
+              window.location.reload();
             } else {
               navigate(key);
             }
@@ -156,6 +163,11 @@ const MainLayout = () => {
               icon: <FaClipboardList className="fs-4" />,
               label: "Enquiries",
             },
+            {
+              key: "signout",
+              icon: <AiOutlineLogout className="fs-4" />,
+              label: "Sign Out",
+            },
           ]}
         />
       </Sider>
@@ -210,16 +222,16 @@ const MainLayout = () => {
                     View Profile
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    onClick={() => localStorage.clear()}
+                    onClick={logouUser()}
                     to="/"
                   >
                     Signout
                   </Link>
-                </li>
+                </li> */}
               </div>
             </div>
           </div>

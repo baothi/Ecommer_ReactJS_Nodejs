@@ -414,6 +414,76 @@ const getMyOrder = asyncHandler(async (req, res) =>{
   }
 });
 
+const getAllOrder = asyncHandler(async (req, res) =>{
+  const { _id } = req.user;
+  try {
+    const orders = await Order.find().populate("user").populate("orderItems.product").populate("orderItems.color");
+    return res.status(200).json(orders);
+  } catch (error) {
+    throw new Error(error)
+  }
+});
+
+const getMonthWiseOrderIncome = asyncHandler(async (req, res) =>{
+  let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  let d  = new Date();
+  let endDate = "";
+  d.setDate(1);
+  for( let index =0; index < 11; index ++){
+    d.setMonth(d.getMonth() - 1)
+    endDate = monthNames[d.getMonth()] + " " + d.getFullYear();
+  }
+  const data = await Order.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $lte: new Date(),
+          $gte: new Date(endDate),
+        }
+      }
+    },
+    {
+      $group: {
+        _id:{month:"$month"},
+        amount:{$sum:"$totalPriceAfterDiscount"},
+        count:{$sum:1}
+      }
+    }
+  ])
+  console.log(data);
+  return res.status(200).json(data);
+});
+
+const getYearlyTotalOrders = asyncHandler(async (req, res) =>{
+  let monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  let d  = new Date();
+  let endDate = "";
+  d.setDate(1);
+  for( let index =0; index < 11; index ++){
+    d.setMonth(d.getMonth() - 1)
+    endDate = monthNames[d.getMonth()] + " " + d.getFullYear();
+  }
+  const data = await Order.aggregate([
+    {
+      $match: {
+        createdAt: {
+          $lte: new Date(),
+          $gte: new Date(endDate),
+        }
+      }
+    },
+    {
+      $group: {
+        _id:null,
+        count:{$sum:1},
+        amount:{$sum:"$totalPriceAfterDiscount"}
+      }
+    }
+  ])
+  console.log(data);
+  return res.status(200).json(data);
+});
+
 // const emptyCart = asyncHandler(async (req, res) => {
 //   console.log(req.user);
 //   const { _id } = req.user;
@@ -509,34 +579,32 @@ const getMyOrder = asyncHandler(async (req, res) =>{
 //   }
 // });
 
-// const getOrderByUserId = asyncHandler(async (req, res) => {
-//   const { id } = req.params;
-//   validateMongoDbId(id);
-//   try {
-//     const userorders = await Order.findOne({ orderby: id })
-//       .populate("products.product")
-//       .populate("orderby")
-//       .exec();
-//     return res.status(200).json(userorders);
-//   } catch (error) {
-//     throw new Error(error);
-//   }
-// });
+const getOrderByUserId = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongoDbId(id);
+  console.log(id,validateMongoDbId(id))
+  try {
+    const userorders = await Order.findOne({ _id:id }).populate("orderItems.product").populate("orderItems.color");
+    return res.status(200).json(userorders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 
-// const updateOrderStatus = asyncHandler(async (req, res) => {
-//   const { status } = req.body;
-//   const { id } = req.params;
-//   validateMongoDbId(id);
-//   try {
-//     const findOrderStatus = await Order.findByIdAndUpdate(id, {
-//       orderStatus: status,
-//       paymentIntent: { status: status }
-//     }, { new: true });
-//     res.json(findOrderStatus);
-//   } catch (error) {
-//     throw new Error(error)
-//   }
-// });
+
+const updateOrder = asyncHandler(async (req, res) => {
+  const { status } = req.body;
+  const { id } = req.params;
+  validateMongoDbId(id);
+  try {
+    const findOrderStatus = await Order.findByIdAndUpdate(id, {
+      orderStatus: status
+    }, { new: true });
+    res.json(findOrderStatus);
+  } catch (error) {
+    throw new Error(error)
+  }
+});
 
 module.exports = {
   createUser,
@@ -563,9 +631,12 @@ module.exports = {
   // createOrder,
   // getOrders,
   // getAllOrders,
-  // getOrderByUserId,
-  // updateOrderStatus,
+  getOrderByUserId,
+  updateOrder,
   removeProductFromCart,
   updateProductQuantityFromCart,
   getMyOrder,
+  getMonthWiseOrderIncome,
+  getYearlyTotalOrders,
+  getAllOrder,
 };
